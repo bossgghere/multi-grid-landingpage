@@ -11,12 +11,12 @@ export default function App() {
   const emailInputRef = useRef(null);
 
   const handleDownloadClick = () => {
-    if (emailInputRef.current) {
-      emailInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => {
-        emailInputRef.current?.focus();
-      }, 400);
-    }
+    const downloadLink = document.createElement('a');
+    downloadLink.href = '/GridTerm.dmg';
+    downloadLink.download = 'GridTerm.dmg';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   };
 
   return (
