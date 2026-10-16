@@ -4,7 +4,7 @@ import { Download } from 'lucide-react';
 export default function Navbar({ onDownloadClick }) {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050608]/90 backdrop-blur-md border-b border-white/[0.08] px-4 sm:px-6 py-3 sm:py-3.5">
-      <div className="max-w-5xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Brand */}
         <div 
           className="flex items-center space-x-2 cursor-pointer" 
@@ -20,9 +20,9 @@ export default function Navbar({ onDownloadClick }) {
 
         {/* Minimal Navigation */}
         <div className="hidden sm:flex items-center space-x-6 text-xs font-mono text-zinc-400">
-          <a href="#demo" className="hover:text-white transition-colors">Demo</a>
           <a href="#features" className="hover:text-white transition-colors">Features</a>
-          <a href="#shortcuts" className="hover:text-white transition-colors">Shortcuts</a>
+          <a href="#features" className="hover:text-white transition-colors">Shortcuts</a>
+          <a href="#features" className="hover:text-white transition-colors">Benchmarks</a>
         </div>
 
         {/* CTA */}
