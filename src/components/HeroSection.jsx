@@ -39,8 +39,15 @@ export default function HeroSection({ emailInputRef }) {
     setTimeout(() => {
       setIsLoading(false);
       setIsUnlocked(true);
-      window.location.href = "https://github.com/bossgghere/multi-grid-terminal/releases/latest/download/GridTerm.dmg";
-    }, 350);
+
+      // Trigger instant direct file download in the browser
+      const downloadLink = document.createElement('a');
+      downloadLink.href = '/GridTerm.dmg';
+      downloadLink.download = 'GridTerm.dmg';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }, 300);
   };
 
   return (
@@ -89,9 +96,18 @@ export default function HeroSection({ emailInputRef }) {
               </button>
             </form>
           ) : (
-            <div className="py-2.5 px-4 flex items-center justify-center space-x-2 text-sm font-medium text-[#1d1d1f]">
-              <Check className="w-4 h-4 text-emerald-600" />
-              <span>Download started. Check your inbox for the link.</span>
+            <div className="py-2.5 px-4 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-3 text-sm font-medium text-[#1d1d1f]">
+              <div className="flex items-center space-x-2">
+                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Download started! Check your downloads folder.</span>
+              </div>
+              <a
+                href="/GridTerm.dmg"
+                download="GridTerm.dmg"
+                className="text-xs text-[#0071e3] underline hover:text-[#0077ed] font-normal"
+              >
+                Click here if it didn't start
+              </a>
             </div>
           )}
         </div>
