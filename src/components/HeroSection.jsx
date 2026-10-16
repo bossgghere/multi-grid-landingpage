@@ -1,100 +1,92 @@
-import React from 'react';
-import { Download, Zap, Shield, Cpu, LayoutGrid, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Download, Terminal, Copy, Check, ArrowRight, Zap, Shield, Sparkles } from 'lucide-react';
 import GithubIcon from './GithubIcon';
 
 export default function HeroSection({ onDownloadClick }) {
-  return (
-    <section className="relative pt-36 pb-20 px-6 max-w-7xl mx-auto text-center flex flex-col items-center">
-      {/* Background Radial Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-cyan-500/20 via-blue-500/15 to-purple-600/20 blur-[120px] pointer-events-none rounded-full" />
+  const [copied, setCopied] = useState(false);
 
-      {/* Release Pill Badge */}
-      <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-8 backdrop-blur-md hover:border-cyan-500/40 transition-colors cursor-pointer" onClick={onDownloadClick}>
-        <span className="flex h-2 w-2 relative">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-        </span>
-        <span className="text-xs font-medium text-slate-300">
-          Kadra v1.0 Early Access is now live for Apple Silicon & Intel
-        </span>
-        <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
+  const handleCopyCmd = () => {
+    navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/bossgghere/multi-grid-terminal/main/install.sh | bash');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
+  };
+
+  return (
+    <section className="relative pt-32 pb-16 px-4 sm:px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
+      {/* Background Engineering Grid */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-60 pointer-events-none -z-10" />
+
+      {/* Cyber Hardware Status Tag */}
+      <div className="inline-flex items-center space-x-2 px-3 py-1 rounded bg-[#0e1118] border border-white/10 mb-8 text-[11px] font-mono text-zinc-300">
+        <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-ping" />
+        <span className="text-zinc-400">[RELEASE // 2026.1]</span>
+        <span className="text-white font-semibold">NATIVE MULTI-GRID TERMINAL WORKSPACE</span>
+        <span className="text-[#ccff00] hidden sm:inline">• APPLE SILICON & INTEL</span>
       </div>
 
-      {/* Main Headline */}
-      <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.1] mb-6">
-        One Window.{' '}
-        <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
-          Multiple Terminals.
-        </span>{' '}
-        Zero Distractions.
+      {/* Giant Brutalist Headline */}
+      <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase text-white leading-[0.95] max-w-5xl mb-6">
+        RUN <span className="text-[#ccff00] underline decoration-[#ccff00]/40 decoration-4 underline-offset-8">9 TERMINALS</span> IN ONE WINDOW. <br />
+        <span className="text-zinc-400">ZERO ELECTRON SLOB.</span>
       </h1>
 
-      {/* Subtitle */}
-      <p className="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed font-normal">
-        A lightweight native macOS terminal workspace. Choose your grid layout and run multiple independent terminals in one window. Switch between 1×1, 1×2, 2×2, 2×3, and 3×3 with zero session loss.
+      {/* Razor Sharp Subtitle */}
+      <p className="text-base sm:text-xl text-zinc-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
+        A brutalist, hardware-accelerated macOS terminal workspace. Switch between 1×1 to 3×3 matrix layouts instantly, jump panes with <kbd className="px-1.5 py-0.5 rounded bg-zinc-800 text-[#ccff00] font-mono text-xs border border-zinc-700 font-bold">⌘1–⌘9</kbd>, and run real CLI agents at native Metal speed.
       </p>
 
-      {/* CTA Buttons */}
-      <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
+      {/* CTA Buttons & Quick Install Bar */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-xl mb-12">
         <button
           onClick={onDownloadClick}
-          className="w-full sm:w-auto flex items-center justify-center space-x-3 px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold text-sm shadow-xl shadow-cyan-500/20 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
+          className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-[#ccff00] hover:bg-[#d9ff33] text-black font-mono font-black text-sm tracking-wide uppercase flex items-center justify-center space-x-2.5 transition-all transform active:translate-y-1 shadow-[0_4px_0_0_#99bf00] cursor-pointer"
         >
-          <Download className="w-4 h-4" />
-          <span>Download Kadra for macOS</span>
-          <span className="text-xs font-mono opacity-80 bg-black/20 px-2 py-0.5 rounded ml-1">.dmg</span>
+          <Download className="w-4 h-4 stroke-[2.5]" />
+          <span>DOWNLOAD FOR MACOS (.DMG)</span>
         </button>
 
-        <a
-          href="https://github.com/bossgghere/multi-grid-terminal"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full sm:w-auto flex items-center justify-center space-x-2.5 px-6 py-3.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] text-slate-300 hover:text-white font-medium text-sm border border-white/10 transition-all duration-200"
+        <button
+          onClick={handleCopyCmd}
+          className="w-full sm:w-auto px-5 py-3.5 rounded-lg bg-[#0e1118] hover:bg-[#141822] border border-white/10 hover:border-white/20 text-zinc-300 font-mono text-xs flex items-center justify-center space-x-2.5 transition-all group"
         >
-          <GithubIcon className="w-4 h-4" />
-          <span>View on GitHub</span>
-        </a>
+          <Terminal className="w-3.5 h-3.5 text-[#ccff00]" />
+          <span className="text-zinc-400 group-hover:text-zinc-200">curl install script</span>
+          {copied ? (
+            <span className="text-[#ccff00] text-[11px] font-bold flex items-center space-x-1">
+              <Check className="w-3 h-3" />
+              <span>COPIED!</span>
+            </span>
+          ) : (
+            <Copy className="w-3 h-3 text-zinc-500 group-hover:text-zinc-300" />
+          )}
+        </button>
       </div>
 
-      {/* Architectural Badges */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl text-left">
-        <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center space-x-3">
-          <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400">
-            <Cpu className="w-4 h-4" />
+      {/* Hardware Ticker Strip with Crosshairs */}
+      <div className="w-full max-w-4xl relative deck-panel rounded-lg p-3 overflow-hidden border border-white/10 bg-[#090b10]">
+        <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400 flex-wrap gap-3 px-2">
+          <div className="flex items-center space-x-2">
+            <span className="text-[#ccff00]">●</span>
+            <span className="text-white font-bold">2.4 MB</span>
+            <span className="text-zinc-500">BINARY SIZE</span>
           </div>
-          <div>
-            <div className="text-xs font-semibold text-white">Native Metal</div>
-            <div className="text-[11px] text-slate-400">&lt;40MB RAM footprint</div>
+          <div className="hidden sm:block text-zinc-700">|</div>
+          <div className="flex items-center space-x-2">
+            <span className="text-[#00f0ff]">⚡</span>
+            <span className="text-white font-bold">&lt;38 MB</span>
+            <span className="text-zinc-500">MEMORY RESIDENCY</span>
           </div>
-        </div>
-
-        <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center space-x-3">
-          <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400">
-            <LayoutGrid className="w-4 h-4" />
+          <div className="hidden sm:block text-zinc-700">|</div>
+          <div className="flex items-center space-x-2">
+            <span className="text-[#ccff00]">⚡</span>
+            <span className="text-white font-bold">0.4 MS</span>
+            <span className="text-zinc-500">KEYSTROKE LATENCY</span>
           </div>
-          <div>
-            <div className="text-xs font-semibold text-white">Dynamic Grid</div>
-            <div className="text-[11px] text-slate-400">1×1 up to 5×5 Matrix</div>
-          </div>
-        </div>
-
-        <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center space-x-3">
-          <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
-            <Zap className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="text-xs font-semibold text-white">Zero Session Loss</div>
-            <div className="text-[11px] text-slate-400">Preserves background PIDs</div>
-          </div>
-        </div>
-
-        <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center space-x-3">
-          <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400">
-            <Shield className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="text-xs font-semibold text-white">100% Offline</div>
-            <div className="text-[11px] text-slate-400">Zero telemetry or cloud</div>
+          <div className="hidden sm:block text-zinc-700">|</div>
+          <div className="flex items-center space-x-2">
+            <span className="text-purple-400">🛡️</span>
+            <span className="text-white font-bold">100% OFFLINE</span>
+            <span className="text-zinc-500">ZERO TRACKING</span>
           </div>
         </div>
       </div>

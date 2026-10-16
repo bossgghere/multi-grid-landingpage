@@ -2,25 +2,121 @@
 
 @layer base {
   body {
-    background-color: #07080b;
-    color: #e2e8f0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #050608;
+    color: #f4f4f5;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     overflow-x: hidden;
+  }
+  
+  code, pre, kbd, .font-mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 }
 
-/* Custom glow and backdrop effects */
-.radial-glow {
-  background: radial-gradient(circle at 50% -20%, rgba(14, 165, 233, 0.18), transparent 70%);
+/* 2026 Developer Hardware Aesthetic Utilities */
+
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
 }
 
-.terminal-border-glow {
-  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.25), 0 0 10px -2px rgba(168, 85, 247, 0.2);
+.bg-dots-pattern {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
 }
 
-.glass-panel {
-  background: rgba(15, 18, 25, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* Mechanical Keycap 3D styling */
+.keycap {
+  background: #11141c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 0 0 #090a0f, 0 6px 12px rgba(0, 0, 0, 0.6);
+  transition: all 0.08s cubic-bezier(0.2, 0.8, 0.2, 1);
+  user-select: none;
+}
+
+.keycap:hover {
+  border-color: rgba(204, 255, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.keycap:active, .keycap.active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 0 #090a0f, 0 2px 4px rgba(0, 0, 0, 0.8);
+  border-color: #ccff00;
+  color: #ccff00;
+}
+
+/* Hardware cyber deck panel */
+.deck-panel {
+  background: #090b10;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+/* Tactical Corner Crosshairs */
+.corner-crosshair {
+  position: relative;
+}
+
+.corner-crosshair::before {
+  content: "+";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  color: rgba(255, 255, 255, 0.25);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Marquee track */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Scanlines overlay */
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.35) 50%
+  ), 
+  linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.02),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.02)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Neon focus rim */
+.neon-lime-rim {
+  box-shadow: 0 0 0 1.5px #ccff00, 0 0 20px rgba(204, 255, 0, 0.25);
+}
+
+.neon-cyan-rim {
+  box-shadow: 0 0 0 1.5px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.25);
+}
+
+/* Hide scrollbar for clean terminal panes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

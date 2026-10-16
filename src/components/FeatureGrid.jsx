@@ -1,80 +1,101 @@
 import React from 'react';
-import { LayoutGrid, Zap, Keyboard, Cpu, FolderGit2, Shield, Sliders, Layers } from 'lucide-react';
+import { LayoutGrid, Layers, Keyboard, Cpu, Sliders, FolderGit2, Zap, Terminal } from 'lucide-react';
 
-const features = [
+const specs = [
   {
+    tag: "01 // MATRIX",
+    title: "1×1 TO 3×3 DYNAMIC TOPOLOGY",
+    desc: "Switch between 1×1, 1×2, 2×1, 2×2, 2×3, 2×4, 3×3, or arbitrary custom splits. Panes automatically distribute across your display with zero window-snapping headaches.",
     icon: LayoutGrid,
-    title: "Dynamic Grid Matrix",
-    description: "Switch seamlessly between 1×1, 1×2, 2×1, 2×2, 2×3, 2×4, 3×3, or custom row/column layouts without opening separate windows.",
-    color: "from-cyan-500 to-blue-500",
+    accent: "text-[#ccff00]",
   },
   {
+    tag: "02 // STATE",
+    title: "ZERO SESSION TERMINATION",
+    desc: "Downsizing a 3×3 grid to 1×1 will never kill your background tasks. Hidden PTY sessions remain alive in memory and re-appear instantly when restoring the matrix.",
     icon: Layers,
-    title: "Zero Session Loss",
-    description: "Changing layouts never terminates your active shells. Hidden sessions remain active in memory and seamlessly restore when returning to larger grids.",
-    color: "from-purple-500 to-indigo-500",
+    accent: "text-[#00f0ff]",
   },
   {
+    tag: "03 // NAV",
+    title: "INSTANT ⌘1–⌘9 PANE HOPS",
+    desc: "Jump focus across any grid cell in 0 milliseconds using standard macOS keyboard keybindings. Active pane is visibly spotlighted with an electric laser rim.",
     icon: Keyboard,
-    title: "Instant ⌘1–⌘9 Navigation",
-    description: "Jump to any pane instantly with Command+1 through Command+9 shortcuts, illuminated by an electric neon focus border.",
-    color: "from-emerald-500 to-teal-500",
+    accent: "text-[#ccff00]",
   },
   {
+    tag: "04 // KERNEL",
+    title: "SWIFT 6 & PURE APPKIT",
+    desc: "Zero web views, zero Node processes. Compiled directly with Swift 6 and Metal glyph rasterization for ultra-low battery consumption and zero heat spikes.",
     icon: Cpu,
-    title: "Native Metal & <40MB RAM",
-    description: "No Electron or web-wrapper overhead. Built 100% natively in Swift, SwiftUI, and AppKit with GPU-accelerated glyph rasterization.",
-    color: "from-amber-500 to-orange-500",
+    accent: "text-purple-400",
   },
   {
+    tag: "05 // GEOMETRY",
+    title: "PROPORTIONAL RESIZE DIVIDERS",
+    desc: "Drag any row or column splitter to customize pane dimensions. Double-click any divider to automatically equalize grid distribution.",
     icon: Sliders,
-    title: "Proportional Split Resizing",
-    description: "Interactive draggable splitters between rows and columns with proportional resizing. Double-click any divider to equalize panes.",
-    color: "from-pink-500 to-rose-500",
+    accent: "text-amber-400",
   },
   {
+    tag: "06 // ISOLATION",
+    title: "INDEPENDENT CWD & GIT TRACKING",
+    desc: "Every pane runs its own isolated subshell. Seamlessly cd into different microservices, run separate AI agents, and observe multiple git repos side by side.",
     icon: FolderGit2,
-    title: "Independent Directory Tracking",
-    description: "Each terminal operates in its own project directory independently, dynamically reporting git branch and working folder without constraints.",
-    color: "from-blue-500 to-cyan-500",
+    accent: "text-pink-400",
   },
 ];
 
 export default function FeatureGrid() {
   return (
-    <section id="features" className="py-20 px-6 max-w-7xl mx-auto">
-      <div className="text-center max-w-2xl mx-auto mb-16">
-        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-3">
-          <Zap className="w-3.5 h-3.5" />
-          <span>Architected for Power Users</span>
+    <section id="features" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 pb-6 border-b border-white/10 gap-4">
+        <div>
+          <div className="inline-flex items-center space-x-2 text-[11px] font-mono uppercase tracking-widest text-[#ccff00] mb-2">
+            <span>[ 03 // ARCHITECTURE ]</span>
+            <span>•</span>
+            <span className="text-zinc-400">ENGINEERING BLUEPRINT</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
+            DESIGNED FOR TERMINAL MAXIS
+          </h2>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Everything You Need. Nothing You Don't.
-        </h2>
-        <p className="text-sm sm:text-base text-slate-400 mt-3 leading-relaxed">
-          Kadra strips away the clutter of traditional terminal emulators and replaces it with native macOS speed and visual grid control.
+        <p className="text-xs sm:text-sm font-mono text-zinc-400 max-w-md">
+          Built for engineers who juggle local AI models, Docker containers, dev servers, and git branches simultaneously.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {features.map((feat, index) => {
-          const Icon = feat.icon;
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {specs.map((item, idx) => {
+          const Icon = item.icon;
           return (
             <div
-              key={index}
-              className="p-7 rounded-2xl glass-panel border border-white/8 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 group relative overflow-hidden"
+              key={idx}
+              className="deck-panel rounded-lg p-6 border border-white/10 hover:border-white/25 transition-all group flex flex-col justify-between"
             >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feat.color} p-[1px] mb-5 shadow-lg group-hover:scale-105 transition-transform`}>
-                <div className="w-full h-full bg-[#0a0c12] rounded-[11px] flex items-center justify-center text-white">
-                  <Icon className="w-5 h-5 text-cyan-400" />
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase">
+                    {item.tag}
+                  </span>
+                  <div className={`p-2 rounded bg-white/[0.03] ${item.accent}`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
                 </div>
+
+                <h3 className="text-lg font-black tracking-tight text-white uppercase mb-2 group-hover:text-[#ccff00] transition-colors">
+                  {item.title}
+                </h3>
+
+                <p className="text-xs font-mono text-zinc-400 leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="text-lg font-bold text-white mb-2 tracking-tight group-hover:text-cyan-300 transition-colors">
-                {feat.title}
-              </h3>
-              <p className="text-sm text-slate-400 leading-relaxed font-normal">
-                {feat.description}
-              </p>
+
+              <div className="mt-6 pt-4 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-mono text-zinc-600">
+                <span>HYPERGRID_SUBSYS</span>
+                <span className="text-zinc-500">READY</span>
+              </div>
             </div>
           );
         })}
