@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Download, Check, AlertCircle } from 'lucide-react';
 
-export default function HeroSection({ emailInputRef }) {
+export default function HeroSection() {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('HYPER2026');
   const [error, setError] = useState('');
@@ -11,6 +11,7 @@ export default function HeroSection({ emailInputRef }) {
   // Terminal interactive state
   const [layout, setLayout] = useState('2x2');
   const [activePane, setActivePane] = useState(1);
+  const [liveStreamIndex, setLiveStreamIndex] = useState(0);
 
   const layoutConfigs = {
     '1x1': { count: 1, cols: 'grid-cols-1', label: '1×1' },
@@ -20,15 +21,15 @@ export default function HeroSection({ emailInputRef }) {
     '3x3': { count: 9, cols: 'grid-cols-3', label: '3×3' },
   };
 
-  const terminals = [
+  const initialTerminals = [
     {
       id: 1,
       title: "agent",
       cmd: "$ claude code",
       lines: [
-        { text: "Claude 3.7 initialized in cell #1", type: "cyan" },
+        { text: "Claude 3.7 Sonnet initialized in #1", type: "cyan" },
         { text: "Listening for local instructions...", type: "dim" },
-        { text: "Ready.", type: "lime" }
+        { text: "⚡ Metal acceleration active", type: "lime" }
       ]
     },
     {
@@ -36,9 +37,9 @@ export default function HeroSection({ emailInputRef }) {
       title: "frontend",
       cmd: "$ npm run dev",
       lines: [
-        { text: "VITE v6.2.0 ready in 98 ms", type: "success" },
+        { text: "VITE v6.2.0 ready in 82 ms", type: "success" },
         { text: "➜ Local: http://localhost:5173", type: "cyan" },
-        { text: "HMR active with zero lag", type: "dim" }
+        { text: "Fast refresh active", type: "dim" }
       ]
     },
     {
@@ -46,7 +47,7 @@ export default function HeroSection({ emailInputRef }) {
       title: "telemetry",
       cmd: "$ btop",
       lines: [
-        { text: "CPU 5.2% | GPU Metal 3.0", type: "cyan" },
+        { text: "CPU 4.2% | GPU Metal 3.0", type: "cyan" },
         { text: "Resident RAM: 36.4 MB", type: "lime" },
         { text: "Sessions: 9 independent PTYs", type: "dim" }
       ]
@@ -58,7 +59,7 @@ export default function HeroSection({ emailInputRef }) {
       lines: [
         { text: "Compiling hyper-daemon v1.0", type: "dim" },
         { text: "Listening on 127.0.0.1:8080", type: "success" },
-        { text: "[OK] IPC socket connected", type: "lime" }
+        { text: "[OK] IPC Unix socket ready", type: "lime" }
       ]
     },
     {
@@ -76,7 +77,7 @@ export default function HeroSection({ emailInputRef }) {
       cmd: "$ git status -sb",
       lines: [
         { text: "## main...origin/main [clean]", type: "success" },
-        { text: "Fast-forward synchronized", type: "dim" }
+        { text: "Zero uncommitted changes", type: "dim" }
       ]
     },
     {
@@ -107,6 +108,36 @@ export default function HeroSection({ emailInputRef }) {
       ]
     },
   ];
+
+  const [terminals, setTerminals] = useState(initialTerminals);
+
+  // Live real-time typing animation into active pane
+  useEffect(() => {
+    const streamCommands = [
+      { text: "✨ Task complete. Zero memory leaks detected.", type: "lime" },
+      { text: "⚡ Keyboard shortcut ⌘ hop: 0.12ms", type: "cyan" },
+      { text: "✓ SwiftTerm buffer synchronized", type: "success" },
+      { text: "→ Metal glyph cache hit: 99.8%", type: "dim" },
+    ];
+
+    const timer = setInterval(() => {
+      setLiveStreamIndex((prev) => (prev + 1) % streamCommands.length);
+      setTerminals((current) =>
+        current.map((t) => {
+          if (t.id === activePane) {
+            const nextMsg = streamCommands[liveStreamIndex % streamCommands.length];
+            return {
+              ...t,
+              lines: [...t.lines.slice(-2), nextMsg]
+            };
+          }
+          return t;
+        })
+      );
+    }, 3800);
+
+    return () => clearInterval(timer);
+  }, [activePane, liveStreamIndex]);
 
   const currentConfig = layoutConfigs[layout] || layoutConfigs['2x2'];
   const visiblePanes = terminals.slice(0, currentConfig.count);
@@ -141,35 +172,42 @@ export default function HeroSection({ emailInputRef }) {
   };
 
   return (
-    <section className="pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className="pt-10 sm:pt-14 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Background Engineering Grid */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none -z-10" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none -z-10" />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Column: Bold Headline & Direct Download */}
         <div className="lg:col-span-5 text-left">
-          <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black tracking-tight uppercase text-white leading-[1.05] mb-4">
+          {/* Brand Tag Pill */}
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 mb-5 animate-enter-1">
+            <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse" />
+            <span className="text-[11px] font-mono font-bold text-zinc-300 uppercase tracking-wider">
+              HyperGrid // v1.0 Native
+            </span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black tracking-tight uppercase text-white leading-[1.05] mb-4 animate-enter-1">
             Run 9 Terminals <br />
             in One Window. <br />
             <span className="text-[#ccff00]">Zero Lag. Pure Swift.</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-zinc-300 mb-8 leading-relaxed max-w-lg font-normal">
+          <p className="text-sm sm:text-base text-zinc-300 mb-8 leading-relaxed max-w-lg font-normal animate-enter-2">
             A fast, lightweight macOS terminal workspace. Choose any grid layout from 1×1 to 3×3, navigate instantly with <kbd className="px-1.5 py-0.5 rounded bg-zinc-800 text-[#ccff00] font-mono text-xs border border-zinc-700 font-bold">⌘1–⌘9</kbd>, and run independent shells without closing sessions.
           </p>
 
-          {/* Integrated Download Box */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-[#090a10] border border-white/10 shadow-2xl">
+          {/* Integrated Download Box with Shimmer Animation */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#090a10]/95 backdrop-blur-sm border border-white/10 shadow-2xl animate-enter-3 hover:border-white/20 transition-all">
             {!isUnlocked ? (
               <form onSubmit={handleSubmit} className="space-y-3.5">
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-zinc-300 font-bold uppercase tracking-wider">Get Early Access</span>
+                  <span className="text-zinc-300 font-bold uppercase tracking-wider">Early Access Program</span>
                   <span className="text-[#ccff00] font-bold">Code: HYPER2026</span>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-2.5">
                   <input
-                    ref={emailInputRef}
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -195,7 +233,7 @@ export default function HeroSection({ emailInputRef }) {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3.5 rounded-lg bg-[#ccff00] hover:bg-[#d9ff33] text-black font-mono font-black text-xs sm:text-sm tracking-wider uppercase flex items-center justify-center space-x-2 transition-transform active:translate-y-0.5 shadow-md cursor-pointer disabled:opacity-50"
+                  className="btn-shimmer w-full py-3.5 sm:py-4 rounded-lg bg-[#ccff00] hover:bg-[#d9ff33] text-black font-mono font-black text-xs sm:text-sm tracking-wider uppercase flex items-center justify-center space-x-2 transition-all transform hover:-translate-y-0.5 active:translate-y-0.5 shadow-lg shadow-[#ccff00]/10 cursor-pointer disabled:opacity-50"
                 >
                   <Download className="w-4 h-4 stroke-[2.5]" />
                   <span>{isLoading ? 'Unlocking...' : 'Download for macOS (.dmg)'}</span>
@@ -215,7 +253,7 @@ export default function HeroSection({ emailInputRef }) {
           </div>
 
           {/* Minimal Specs */}
-          <div className="mt-5 flex items-center flex-wrap gap-5 text-xs font-mono text-zinc-500">
+          <div className="mt-5 flex items-center flex-wrap gap-5 text-xs font-mono text-zinc-500 animate-enter-3">
             <span className="text-zinc-300 font-semibold">2.4 MB Binary</span>
             <span>•</span>
             <span>&lt;40 MB RAM</span>
@@ -226,15 +264,15 @@ export default function HeroSection({ emailInputRef }) {
           </div>
         </div>
 
-        {/* Right Column: Full-Sized, Impressive Interactive Terminal Grid */}
-        <div className="lg:col-span-7">
-          <div className="rounded-2xl border border-white/15 bg-[#06070a] shadow-2xl overflow-hidden">
+        {/* Right Column: Full-Sized, Animated Interactive Terminal Grid */}
+        <div className="lg:col-span-7 animate-enter-2">
+          <div className="rounded-2xl border border-white/15 bg-[#06070a] shadow-2xl overflow-hidden hover:border-white/25 transition-all duration-300">
             {/* Title Bar with Traffic Lights & Layout Switcher */}
             <div className="flex items-center justify-between px-4 py-3 bg-[#0d0f17] border-b border-white/10 flex-wrap gap-2">
               <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40" />
-                <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40" />
-                <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40" />
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 hover:opacity-80 cursor-pointer transition-opacity" />
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 hover:opacity-80 cursor-pointer transition-opacity" />
+                <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 hover:opacity-80 cursor-pointer transition-opacity" />
                 <span className="text-xs font-mono font-bold text-zinc-300 ml-2 tracking-wide">
                   HyperGrid // Workspace
                 </span>
@@ -251,7 +289,7 @@ export default function HeroSection({ emailInputRef }) {
                         setLayout(key);
                         if (activePane > layoutConfigs[key].count) setActivePane(1);
                       }}
-                      className={`px-3 py-1 rounded text-xs font-mono font-bold transition-all ${
+                      className={`px-3 py-1 rounded text-xs font-mono font-bold transition-all duration-150 transform active:scale-95 cursor-pointer ${
                         isSelected
                           ? 'bg-[#ccff00] text-black shadow-sm'
                           : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
@@ -264,29 +302,29 @@ export default function HeroSection({ emailInputRef }) {
               </div>
             </div>
 
-            {/* Dynamic Grid Panes Viewport with Solid Height */}
-            <div className={`grid ${currentConfig.cols} gap-1.5 p-1.5 bg-[#090b12] min-h-[380px] sm:min-h-[440px]`}>
+            {/* Dynamic Grid Panes Viewport with Pulse Laser Rim */}
+            <div className={`grid ${currentConfig.cols} gap-1.5 p-1.5 bg-[#090b12] min-h-[380px] sm:min-h-[440px] transition-all duration-300`}>
               {visiblePanes.map((pane) => {
                 const isActive = activePane === pane.id;
                 return (
                   <div
                     key={pane.id}
                     onClick={() => setActivePane(pane.id)}
-                    className={`rounded-lg p-3.5 sm:p-4 transition-all cursor-pointer flex flex-col justify-between overflow-hidden ${
+                    className={`rounded-lg p-3.5 sm:p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden group ${
                       isActive
-                        ? 'bg-[#0d101a] ring-2 ring-[#ccff00] shadow-[inset_0_0_20px_rgba(204,255,0,0.06)]'
-                        : 'bg-[#0a0c14] hover:bg-[#0c0e18] border border-white/5'
+                        ? 'bg-[#0d101a] active-laser-pane'
+                        : 'bg-[#0a0c14] hover:bg-[#0c0e18] hover:border-white/10 border border-white/5'
                     }`}
                   >
                     {/* Pane Header */}
                     <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-[11px] font-mono">
                       <div className="flex items-center space-x-1.5">
-                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#ccff00] animate-pulse' : 'bg-zinc-600'}`} />
-                        <span className={isActive ? 'text-[#ccff00] font-bold' : 'text-zinc-400'}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#ccff00] animate-ping' : 'bg-zinc-600'}`} />
+                        <span className={isActive ? 'text-[#ccff00] font-bold' : 'text-zinc-400 group-hover:text-zinc-200'}>
                           ⌘{pane.id} // {pane.title}
                         </span>
                       </div>
-                      <span className="text-zinc-600">zsh</span>
+                      <span className="text-zinc-600 text-[10px]">zsh</span>
                     </div>
 
                     {/* Terminal Text Lines */}
@@ -300,7 +338,7 @@ export default function HeroSection({ emailInputRef }) {
                         if (line.type === 'dim') colorClass = "text-zinc-500";
 
                         return (
-                          <div key={idx} className={`${colorClass} truncate`}>
+                          <div key={idx} className={`${colorClass} truncate transition-all duration-300`}>
                             {line.text}
                           </div>
                         );
@@ -308,7 +346,7 @@ export default function HeroSection({ emailInputRef }) {
                       {isActive && (
                         <div className="flex items-center space-x-1 text-zinc-500 mt-1.5">
                           <span className="text-[#ccff00] font-bold">$</span>
-                          <span className="w-2 h-3.5 bg-[#ccff00] animate-pulse inline-block" />
+                          <span className="w-2 h-3.5 bg-[#ccff00] terminal-cursor inline-block" />
                         </div>
                       )}
                     </div>
@@ -317,7 +355,7 @@ export default function HeroSection({ emailInputRef }) {
               })}
             </div>
 
-            {/* Bottom Keycap Navigation Bar */}
+            {/* Bottom Keycap Navigation Bar with Physics Feedback */}
             <div className="p-3 bg-[#0a0c12] border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400 overflow-x-auto no-scrollbar gap-2">
               <span className="shrink-0 text-zinc-400 font-semibold">Jump to pane:</span>
               <div className="flex items-center space-x-1.5 shrink-0">

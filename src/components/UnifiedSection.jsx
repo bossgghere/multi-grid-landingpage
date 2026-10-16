@@ -61,12 +61,12 @@ export default function UnifiedSection() {
               return (
                 <div
                   key={idx}
-                  className="p-4 sm:p-5 rounded-xl bg-[#090a10] border border-white/5 text-left hover:border-white/10 transition-colors"
+                  className="p-4 sm:p-5 rounded-xl bg-[#090a10] border border-white/5 text-left hover:border-white/20 transform hover:-translate-y-1 transition-all duration-200 group"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-[#ccff00] mb-3">
+                  <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-[#ccff00] mb-3 group-hover:border-[#ccff00]/40 transition-colors">
                     <Icon className="w-4 h-4" />
                   </div>
-                  <h3 className="text-sm sm:text-base font-bold text-white mb-1.5">
+                  <h3 className="text-sm sm:text-base font-bold text-white mb-1.5 group-hover:text-[#ccff00] transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-xs sm:text-[13px] text-zinc-400 leading-relaxed">
@@ -81,7 +81,7 @@ export default function UnifiedSection() {
         {/* Right: Shortcuts & Benchmarks Combined (5 columns) */}
         <div className="lg:col-span-5 space-y-4 sm:space-y-5">
           {/* Shortcuts Card */}
-          <div className="p-5 rounded-xl bg-[#090a10] border border-white/5 text-left">
+          <div className="p-5 rounded-xl bg-[#090a10] border border-white/5 text-left hover:border-white/15 transform hover:-translate-y-0.5 transition-all duration-200">
             <h3 className="text-xs sm:text-sm font-mono font-bold text-zinc-200 uppercase mb-3 flex items-center justify-between">
               <span>Shortcuts</span>
               <span className="text-zinc-500 font-normal text-xs">Home-Row</span>
@@ -89,11 +89,11 @@ export default function UnifiedSection() {
 
             <div className="grid grid-cols-2 gap-2.5">
               {shortcuts.map((sc, idx) => (
-                <div key={idx} className="flex items-center justify-between text-xs font-mono py-1">
+                <div key={idx} className="flex items-center justify-between text-xs font-mono py-1 hover:text-white transition-colors">
                   <span className="text-zinc-400">{sc.action}</span>
                   <div className="flex items-center space-x-1">
                     {sc.keys.map((k, kIdx) => (
-                      <kbd key={kIdx} className="px-1.5 sm:px-2 py-0.5 rounded bg-zinc-900 border border-white/10 text-[11px] sm:text-xs text-zinc-300 font-semibold">
+                      <kbd key={kIdx} className="px-1.5 sm:px-2 py-0.5 rounded bg-zinc-900 border border-white/10 text-[11px] sm:text-xs text-zinc-300 font-semibold shadow-inner">
                         {k}
                       </kbd>
                     ))}
@@ -104,7 +104,7 @@ export default function UnifiedSection() {
           </div>
 
           {/* Benchmarks Card */}
-          <div className="p-5 rounded-xl bg-[#090a10] border border-white/5 text-left">
+          <div className="p-5 rounded-xl bg-[#090a10] border border-white/5 text-left hover:border-white/15 transform hover:-translate-y-0.5 transition-all duration-200">
             <h3 className="text-xs sm:text-sm font-mono font-bold text-zinc-200 uppercase mb-3 flex items-center justify-between">
               <span>Benchmarks</span>
               <span className="text-[#ccff00] text-xs">vs. Electron</span>
@@ -112,7 +112,7 @@ export default function UnifiedSection() {
 
             <div className="divide-y divide-white/5 text-xs font-mono">
               {benchmarks.map((b, idx) => (
-                <div key={idx} className="flex items-center justify-between py-2">
+                <div key={idx} className="flex items-center justify-between py-2 hover:bg-white/[0.02] transition-colors">
                   <span className="text-zinc-400">{b.metric}</span>
                   <div className="flex items-center space-x-3 text-right">
                     <span className="text-[#ccff00] font-bold text-xs sm:text-sm">{b.hyper}</span>
