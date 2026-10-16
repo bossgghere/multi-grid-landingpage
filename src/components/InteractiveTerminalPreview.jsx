@@ -106,18 +106,18 @@ export default function InteractiveTerminalPreview() {
   const visiblePanes = terminals.slice(0, currentConfig.count);
 
   return (
-    <section id="demo" className="py-20 px-6 max-w-5xl mx-auto">
+    <section id="demo" className="py-8 sm:py-12 px-3 sm:px-6 max-w-5xl mx-auto">
       {/* Clean Header */}
-      <div className="text-center mb-10">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Interactive Grid Preview
+      <div className="text-center mb-6">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          Interactive Grid Demo
         </h2>
-        <p className="text-sm text-zinc-400 mt-2 max-w-lg mx-auto">
+        <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-lg mx-auto">
           Switch layouts or click any terminal pane to inspect active focus and keyboard navigation.
         </p>
 
         {/* Minimal Layout Pills */}
-        <div className="flex items-center justify-center space-x-2 mt-6">
+        <div className="flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 mt-4">
           {Object.keys(layoutConfigs).map((key) => {
             const isSelected = layout === key;
             return (
@@ -127,7 +127,7 @@ export default function InteractiveTerminalPreview() {
                   setLayout(key);
                   if (activePane > layoutConfigs[key].count) setActivePane(1);
                 }}
-                className={`px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded text-xs font-mono font-bold transition-colors ${
                   isSelected
                     ? 'bg-[#ccff00] text-black'
                     : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
@@ -143,50 +143,50 @@ export default function InteractiveTerminalPreview() {
       {/* Terminal Window */}
       <div className="rounded-xl border border-white/10 bg-[#07080b] shadow-2xl overflow-hidden">
         {/* Title bar */}
-        <div className="flex items-center justify-between px-4 py-3 bg-[#0d0e14] border-b border-white/5">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-            <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-            <span className="text-xs font-mono text-zinc-400 ml-2">HyperGrid</span>
+        <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#0d0e14] border-b border-white/5">
+          <div className="flex items-center space-x-1.5 sm:space-x-2">
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]" />
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]" />
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]" />
+            <span className="text-[11px] sm:text-xs font-mono text-zinc-400 ml-1.5 sm:ml-2">HyperGrid</span>
           </div>
-          <div className="text-[11px] font-mono text-zinc-500">
+          <div className="text-[10px] sm:text-[11px] font-mono text-zinc-500">
             Active: <span className="text-[#ccff00]">Pane #{activePane}</span>
           </div>
         </div>
 
         {/* Dynamic Panes */}
-        <div className={`grid ${currentConfig.cols} gap-1 p-1 bg-[#090a10] min-h-[420px]`}>
+        <div className={`grid ${currentConfig.cols} gap-1 p-1 bg-[#090a10] min-h-[300px] sm:min-h-[380px]`}>
           {visiblePanes.map((pane) => {
             const isActive = activePane === pane.id;
             return (
               <div
                 key={pane.id}
                 onClick={() => setActivePane(pane.id)}
-                className={`rounded-lg p-4 transition-all cursor-pointer flex flex-col justify-between ${
+                className={`rounded-lg p-3 sm:p-4 transition-all cursor-pointer flex flex-col justify-between ${
                   isActive
                     ? 'bg-[#0e1017] ring-1 ring-[#ccff00]'
                     : 'bg-[#0a0b10] hover:bg-[#0c0d14] border border-white/5'
                 }`}
               >
-                <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-[11px] font-mono">
+                <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-white/5 text-[10px] sm:text-[11px] font-mono">
                   <span className={isActive ? 'text-[#ccff00] font-bold' : 'text-zinc-400'}>
                     ⌘{pane.id} // {pane.title}
                   </span>
-                  <span className="text-zinc-600">zsh</span>
+                  <span className="text-zinc-600 text-[10px]">zsh</span>
                 </div>
 
-                <div className="space-y-1 font-mono text-xs text-zinc-300 flex-1">
-                  <div className="font-bold text-white">{pane.cmd}</div>
+                <div className="space-y-0.5 sm:space-y-1 font-mono text-[11px] sm:text-xs text-zinc-300 flex-1 overflow-hidden">
+                  <div className="font-bold text-white truncate">{pane.cmd}</div>
                   {pane.output.map((out, idx) => (
-                    <div key={idx} className="text-zinc-400 text-[11px]">
+                    <div key={idx} className="text-zinc-400 text-[10px] sm:text-[11px] truncate">
                       {out}
                     </div>
                   ))}
                   {isActive && (
-                    <div className="flex items-center space-x-1 text-zinc-500 mt-2">
+                    <div className="flex items-center space-x-1 text-zinc-500 mt-1 sm:mt-2">
                       <span className="text-[#ccff00]">$</span>
-                      <span className="w-2 h-3.5 bg-[#ccff00] animate-pulse inline-block" />
+                      <span className="w-1.5 sm:w-2 h-3 sm:h-3.5 bg-[#ccff00] animate-pulse inline-block" />
                     </div>
                   )}
                 </div>
@@ -197,12 +197,12 @@ export default function InteractiveTerminalPreview() {
       </div>
 
       {/* Clean Keycap Bar */}
-      <div className="mt-6 flex items-center justify-center space-x-2">
-        <span className="text-xs font-mono text-zinc-500 mr-2">Focus pane:</span>
-        <div className="keycap px-2.5 py-1 rounded font-mono text-xs font-bold text-zinc-400">
+      <div className="mt-4 sm:mt-5 flex items-center justify-start sm:justify-center overflow-x-auto no-scrollbar py-1 px-1 gap-1.5 sm:gap-2 max-w-full">
+        <span className="text-[11px] sm:text-xs font-mono text-zinc-500 shrink-0">Focus:</span>
+        <div className="keycap px-2 sm:px-2.5 py-1 rounded font-mono text-[11px] sm:text-xs font-bold text-zinc-400 shrink-0">
           ⌘
         </div>
-        <span className="text-zinc-600 font-mono">+</span>
+        <span className="text-zinc-600 font-mono text-xs shrink-0">+</span>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => {
           const isTargetActive = activePane === num;
           return (
@@ -216,7 +216,7 @@ export default function InteractiveTerminalPreview() {
                 }
                 setActivePane(num);
               }}
-              className={`keycap px-3 py-1 rounded font-mono text-xs font-bold cursor-pointer ${
+              className={`keycap px-2.5 sm:px-3 py-1 rounded font-mono text-[11px] sm:text-xs font-bold cursor-pointer shrink-0 ${
                 isTargetActive ? 'active text-[#ccff00]' : 'text-zinc-300'
               }`}
             >

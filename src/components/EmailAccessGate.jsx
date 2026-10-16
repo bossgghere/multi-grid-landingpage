@@ -69,14 +69,14 @@ export default function EmailAccessGate() {
   };
 
   return (
-    <section id="download" className="py-24 px-6 max-w-xl mx-auto">
-      <div className="p-8 sm:p-10 rounded-2xl bg-[#090a10] border border-white/10 shadow-2xl text-center">
+    <section id="download" className="py-10 sm:py-14 px-4 sm:px-6 max-w-xl mx-auto">
+      <div className="p-5 sm:p-8 rounded-2xl bg-[#090a10] border border-white/10 shadow-2xl text-center">
         {!isUnlocked ? (
           <div>
-            <h2 className="text-3xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Get HyperGrid for macOS
             </h2>
-            <p className="text-sm text-zinc-400 mt-2 mb-8">
+            <p className="text-xs sm:text-sm text-zinc-400 mt-1 mb-5 sm:mb-6">
               Enter your email to unlock the direct installer.
             </p>
 

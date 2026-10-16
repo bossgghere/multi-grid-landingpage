@@ -9,31 +9,33 @@ export default function SpecComparison() {
   ];
 
   return (
-    <section className="py-16 px-6 max-w-4xl mx-auto">
-      <div className="text-center mb-8">
+    <section className="py-8 sm:py-12 px-4 sm:px-6 max-w-4xl mx-auto">
+      <div className="text-center mb-5 sm:mb-6">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
           Performance Benchmarks
         </h2>
-        <p className="text-xs sm:text-sm text-zinc-400 mt-1.5">
+        <p className="text-xs sm:text-sm text-zinc-400 mt-1">
           Native macOS architecture vs. typical web-wrapper terminals.
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-[#090a10] overflow-hidden">
-        <div className="grid grid-cols-3 bg-[#0e1017] px-5 py-3 border-b border-white/10 text-xs font-mono font-bold text-zinc-400">
-          <div>METRIC</div>
-          <div className="text-[#ccff00]">HYPERGRID</div>
-          <div className="text-zinc-500">ELECTRON ALTERNATIVES</div>
-        </div>
+      <div className="rounded-xl border border-white/10 bg-[#090a10] overflow-hidden overflow-x-auto">
+        <div className="min-w-[440px]">
+          <div className="grid grid-cols-3 bg-[#0e1017] px-4 sm:px-5 py-2.5 sm:py-3 border-b border-white/10 text-[11px] sm:text-xs font-mono font-bold text-zinc-400">
+            <div>METRIC</div>
+            <div className="text-[#ccff00]">HYPERGRID</div>
+            <div className="text-zinc-500">ELECTRON ALTERNATIVES</div>
+          </div>
 
-        <div className="divide-y divide-white/5 text-xs font-mono">
-          {comparisons.map((row, idx) => (
-            <div key={idx} className="grid grid-cols-3 px-5 py-3.5 items-center hover:bg-white/[0.02]">
-              <div className="text-zinc-300 font-medium">{row.metric}</div>
-              <div className="text-[#ccff00] font-bold">{row.hypergrid}</div>
-              <div className="text-zinc-500">{row.other}</div>
-            </div>
-          ))}
+          <div className="divide-y divide-white/5 text-[11px] sm:text-xs font-mono">
+            {comparisons.map((row, idx) => (
+              <div key={idx} className="grid grid-cols-3 px-4 sm:px-5 py-2.5 sm:py-3 items-center hover:bg-white/[0.02]">
+                <div className="text-zinc-300 font-medium">{row.metric}</div>
+                <div className="text-[#ccff00] font-bold">{row.hypergrid}</div>
+                <div className="text-zinc-500">{row.other}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
