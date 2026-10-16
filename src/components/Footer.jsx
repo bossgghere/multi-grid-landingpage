@@ -22,7 +22,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-white transition-colors flex items-center space-x-1"
           >
-            <Github className="w-4 h-4" />
+            <GithubIcon className="w-4 h-4" />
             <span>GitHub Repository</span>
           </a>
           <span>•</span>

@@ -40,7 +40,7 @@ export default function Navbar({ onDownloadClick }) {
             rel="noopener noreferrer"
             className="flex items-center space-x-1.5 hover:text-white transition-colors"
           >
-            <Github className="w-4 h-4" />
+            <GithubIcon className="w-4 h-4" />
             <span>GitHub</span>
           </a>
         </div>

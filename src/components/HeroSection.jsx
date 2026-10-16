@@ -51,7 +51,7 @@ export default function HeroSection({ onDownloadClick }) {
           rel="noopener noreferrer"
           className="w-full sm:w-auto flex items-center justify-center space-x-2.5 px-6 py-3.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] text-slate-300 hover:text-white font-medium text-sm border border-white/10 transition-all duration-200"
         >
-          <Github className="w-4 h-4" />
+          <GithubIcon className="w-4 h-4" />
           <span>View on GitHub</span>
         </a>
       </div>
