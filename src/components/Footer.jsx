@@ -1,5 +1,4 @@
 import React from 'react';
-import GithubIcon from './GithubIcon';
 
 export default function Footer() {
   return (
@@ -12,16 +11,6 @@ export default function Footer() {
           <span>•</span>
           <span>MIT License</span>
         </div>
-
-        <a
-          href="https://github.com/bossgghere/multi-grid-terminal"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-white transition-colors flex items-center space-x-1.5"
-        >
-          <GithubIcon className="w-3.5 h-3.5" />
-          <span>GitHub</span>
-        </a>
       </div>
     </footer>
   );

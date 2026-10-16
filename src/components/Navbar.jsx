@@ -1,6 +1,5 @@
 import React from 'react';
 import { Download } from 'lucide-react';
-import GithubIcon from './GithubIcon';
 
 export default function Navbar({ onDownloadClick }) {
   return (
@@ -24,15 +23,6 @@ export default function Navbar({ onDownloadClick }) {
           <a href="#demo" className="hover:text-white transition-colors">Demo</a>
           <a href="#features" className="hover:text-white transition-colors">Features</a>
           <a href="#shortcuts" className="hover:text-white transition-colors">Shortcuts</a>
-          <a 
-            href="https://github.com/bossgghere/multi-grid-terminal"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white transition-colors flex items-center space-x-1"
-          >
-            <GithubIcon className="w-3.5 h-3.5" />
-            <span>GitHub</span>
-          </a>
         </div>
 
         {/* CTA */}
