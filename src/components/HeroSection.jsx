@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Check, AlertCircle } from 'lucide-react';
+import { Download, Check, AlertCircle, Apple } from 'lucide-react';
 
 export default function HeroSection() {
   const [email, setEmail] = useState('');
-  const [code, setCode] = useState('HYPER2026');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -25,11 +24,11 @@ export default function HeroSection() {
     {
       id: 1,
       title: "agent",
-      cmd: "$ claude code",
+      cmd: "$ claude",
       lines: [
-        { text: "Claude 3.7 Sonnet initialized in #1", type: "cyan" },
-        { text: "Listening for local instructions...", type: "dim" },
-        { text: "⚡ Metal acceleration active", type: "lime" }
+        { text: "Claude 3.7 initialized in cell 1", type: "blue" },
+        { text: "Listening for local commands...", type: "dim" },
+        { text: "Metal acceleration ready", type: "success" }
       ]
     },
     {
@@ -37,29 +36,29 @@ export default function HeroSection() {
       title: "frontend",
       cmd: "$ npm run dev",
       lines: [
-        { text: "VITE v6.2.0 ready in 82 ms", type: "success" },
-        { text: "➜ Local: http://localhost:5173", type: "cyan" },
+        { text: "Vite v6.2.0 ready in 82 ms", type: "success" },
+        { text: "Local: http://localhost:5173", type: "blue" },
         { text: "Fast refresh active", type: "dim" }
       ]
     },
     {
       id: 3,
-      title: "telemetry",
+      title: "system",
       cmd: "$ btop",
       lines: [
-        { text: "CPU 4.2% | GPU Metal 3.0", type: "cyan" },
-        { text: "Resident RAM: 36.4 MB", type: "lime" },
+        { text: "CPU 4.2% • GPU Metal 3", type: "blue" },
+        { text: "Memory 36.4 MB resident", type: "success" },
         { text: "Sessions: 9 independent PTYs", type: "dim" }
       ]
     },
     {
       id: 4,
-      title: "api-server",
+      title: "backend",
       cmd: "$ cargo run",
       lines: [
-        { text: "Compiling hyper-daemon v1.0", type: "dim" },
+        { text: "Compiling daemon v1.0", type: "dim" },
         { text: "Listening on 127.0.0.1:8080", type: "success" },
-        { text: "[OK] IPC Unix socket ready", type: "lime" }
+        { text: "IPC Unix socket ready", type: "blue" }
       ]
     },
     {
@@ -67,8 +66,8 @@ export default function HeroSection() {
       title: "models",
       cmd: "$ gemini run",
       lines: [
-        { text: "Gemini 2.5 Flash agent running", type: "cyan" },
-        { text: "Verification: 10/10 tests pass", type: "lime" }
+        { text: "Gemini 2.5 Flash agent active", type: "blue" },
+        { text: "Verification: 10/10 passed", type: "success" }
       ]
     },
     {
@@ -94,8 +93,8 @@ export default function HeroSection() {
       title: "logs",
       cmd: "$ tail -f app.log",
       lines: [
-        { text: "[INFO] Grid layout resized to 3x3", type: "cyan" },
-        { text: "[INFO] Session preservation: active", type: "lime" }
+        { text: "[INFO] Grid matrix synchronized", type: "blue" },
+        { text: "[INFO] Session preservation: active", type: "success" }
       ]
     },
     {
@@ -103,21 +102,20 @@ export default function HeroSection() {
       title: "zsh",
       cmd: "$ uname -mprs",
       lines: [
-        { text: "Darwin arm64 Apple Silicon", type: "cyan" },
-        { text: "Native Swift 6 & AppKit core", type: "lime" }
+        { text: "Darwin arm64 Apple Silicon", type: "blue" },
+        { text: "Native Swift 6 & AppKit core", type: "success" }
       ]
     },
   ];
 
   const [terminals, setTerminals] = useState(initialTerminals);
 
-  // Live real-time typing animation into active pane
+  // Subtle live update inside active terminal pane
   useEffect(() => {
     const streamCommands = [
-      { text: "✨ Task complete. Zero memory leaks detected.", type: "lime" },
-      { text: "⚡ Keyboard shortcut ⌘ hop: 0.12ms", type: "cyan" },
-      { text: "✓ SwiftTerm buffer synchronized", type: "success" },
-      { text: "→ Metal glyph cache hit: 99.8%", type: "dim" },
+      { text: "✓ Session buffer verified", type: "success" },
+      { text: "⚡ Keystroke latency: 0.12ms", type: "blue" },
+      { text: "→ Metal glyph rasterizer: 120 FPS", type: "dim" },
     ];
 
     const timer = setInterval(() => {
@@ -134,7 +132,7 @@ export default function HeroSection() {
           return t;
         })
       );
-    }, 3800);
+    }, 4000);
 
     return () => clearInterval(timer);
   }, [activePane, liveStreamIndex]);
@@ -151,135 +149,127 @@ export default function HeroSection() {
       return;
     }
 
-    if (!code || code.trim().length < 3) {
-      setError('Access code required (use HYPER2026).');
-      return;
-    }
-
     setIsLoading(true);
 
+    // Save lead locally
     try {
       const existing = JSON.parse(localStorage.getItem('hypergrid_subscribers') || '[]');
-      existing.push({ email: email.trim(), code: code.trim(), date: new Date().toISOString() });
+      existing.push({ email: email.trim(), date: new Date().toISOString() });
       localStorage.setItem('hypergrid_subscribers', JSON.stringify(existing));
     } catch (err) {}
+
+    // Send to Resend via API endpoint
+    try {
+      await fetch('/api/download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+    } catch (err) {
+      console.warn('API call fallback:', err);
+    }
 
     setTimeout(() => {
       setIsLoading(false);
       setIsUnlocked(true);
       window.location.href = "https://github.com/bossgghere/multi-grid-terminal/releases/latest/download/GridTerm.dmg";
-    }, 400);
+    }, 350);
   };
 
   return (
-    <section className="pt-10 sm:pt-14 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Background Engineering Grid */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none -z-10" />
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        {/* Left Column: Bold Headline & Direct Download */}
+    <section className="pt-12 sm:pt-16 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        {/* Left Column: Apple-style Minimalism */}
         <div className="lg:col-span-5 text-left">
-          {/* Brand Tag Pill */}
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 mb-5 animate-enter-1">
-            <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse" />
-            <span className="text-[11px] font-mono font-bold text-zinc-300 uppercase tracking-wider">
-              HyperGrid // v1.0 Native
+          {/* Brand Mark */}
+          <div className="flex items-center space-x-2.5 mb-6">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-b from-zinc-700 to-zinc-900 border border-white/20 p-[1px] shadow-sm flex items-center justify-center">
+              <div className="w-full h-full bg-[#14161c] rounded-[10px] flex items-center justify-center">
+                <span className="text-[#2997ff] font-mono font-bold text-xs">▞</span>
+              </div>
+            </div>
+            <span className="font-semibold text-lg tracking-tight text-white">
+              HyperGrid
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black tracking-tight uppercase text-white leading-[1.05] mb-4 animate-enter-1">
-            Run 9 Terminals <br />
-            in One Window. <br />
-            <span className="text-[#ccff00]">Zero Lag. Pure Swift.</span>
+          <h1 className="text-4xl sm:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-[1.08] mb-4">
+            Nine terminals. <br />
+            Zero clutter.
           </h1>
 
-          <p className="text-sm sm:text-base text-zinc-300 mb-8 leading-relaxed max-w-lg font-normal animate-enter-2">
-            A fast, lightweight macOS terminal workspace. Choose any grid layout from 1×1 to 3×3, navigate instantly with <kbd className="px-1.5 py-0.5 rounded bg-zinc-800 text-[#ccff00] font-mono text-xs border border-zinc-700 font-bold">⌘1–⌘9</kbd>, and run independent shells without closing sessions.
+          <p className="text-base sm:text-lg text-zinc-400 mb-8 leading-relaxed font-normal max-w-md">
+            A native macOS workspace for engineers. Run multiple independent shell sessions in a fluid, hardware-accelerated grid with instant keyboard navigation.
           </p>
 
-          {/* Integrated Download Box with Shimmer Animation */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-[#090a10]/95 backdrop-blur-sm border border-white/10 shadow-2xl animate-enter-3 hover:border-white/20 transition-all">
+          {/* Frictionless Apple-style Download Form */}
+          <div className="p-2 sm:p-2.5 rounded-2xl bg-zinc-900/60 backdrop-blur-xl border border-white/10 shadow-2xl max-w-md">
             {!isUnlocked ? (
-              <form onSubmit={handleSubmit} className="space-y-3.5">
-                <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-zinc-300 font-bold uppercase tracking-wider">Early Access Program</span>
-                  <span className="text-[#ccff00] font-bold">Code: HYPER2026</span>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-2.5">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter developer email"
-                    className="flex-1 px-4 py-3 rounded-lg bg-[#0e1017] border border-white/10 focus:border-[#ccff00] text-white placeholder-zinc-500 font-mono text-xs sm:text-sm outline-none transition-colors"
-                  />
-                  <input
-                    type="text"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    placeholder="Code"
-                    className="w-full sm:w-32 px-4 py-3 rounded-lg bg-[#0e1017] border border-white/10 focus:border-[#ccff00] text-white placeholder-zinc-500 font-mono text-xs sm:text-sm outline-none transition-colors uppercase text-center font-bold"
-                  />
-                </div>
-
-                {error && (
-                  <div className="text-red-400 text-xs font-mono flex items-center space-x-1.5">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    <span>{error}</span>
-                  </div>
-                )}
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  className="flex-1 px-4 py-3 rounded-xl bg-zinc-950/80 border border-white/10 focus:border-[#2997ff] focus:ring-1 focus:ring-[#2997ff] text-white placeholder-zinc-500 text-sm outline-none transition-all"
+                />
 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="btn-shimmer w-full py-3.5 sm:py-4 rounded-lg bg-[#ccff00] hover:bg-[#d9ff33] text-black font-mono font-black text-xs sm:text-sm tracking-wider uppercase flex items-center justify-center space-x-2 transition-all transform hover:-translate-y-0.5 active:translate-y-0.5 shadow-lg shadow-[#ccff00]/10 cursor-pointer disabled:opacity-50"
+                  className="px-5 py-3 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-medium text-sm tracking-tight flex items-center justify-center space-x-2 transition-all active:scale-[0.98] shadow-lg shadow-[#0071e3]/20 cursor-pointer shrink-0 disabled:opacity-50"
                 >
-                  <Download className="w-4 h-4 stroke-[2.5]" />
-                  <span>{isLoading ? 'Unlocking...' : 'Download for macOS (.dmg)'}</span>
+                  <Download className="w-4 h-4" />
+                  <span>{isLoading ? 'Preparing...' : 'Download for macOS'}</span>
                 </button>
               </form>
             ) : (
-              <div className="text-center py-3">
-                <div className="text-[#ccff00] text-sm font-mono font-bold flex items-center justify-center space-x-2 mb-1.5">
-                  <Check className="w-5 h-5 stroke-[2.5]" />
-                  <span>Download Started</span>
-                </div>
-                <p className="text-xs font-mono text-zinc-400">
-                  Universal DMG (Apple Silicon M1/M2/M3/M4 & Intel).
-                </p>
+              <div className="text-center py-2.5 px-3 flex items-center justify-center space-x-2">
+                <Check className="w-4 h-4 text-emerald-400" />
+                <span className="text-sm font-medium text-white">
+                  Download started. Check your inbox for the link.
+                </span>
               </div>
             )}
           </div>
 
-          {/* Minimal Specs */}
-          <div className="mt-5 flex items-center flex-wrap gap-5 text-xs font-mono text-zinc-500 animate-enter-3">
-            <span className="text-zinc-300 font-semibold">2.4 MB Binary</span>
+          {error && (
+            <div className="mt-2 text-red-400 text-xs flex items-center space-x-1.5">
+              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          {/* Minimal macOS Spec Line */}
+          <div className="mt-5 flex items-center space-x-3 text-xs text-zinc-500">
+            <span className="flex items-center space-x-1 text-zinc-400">
+              <Apple className="w-3.5 h-3.5 text-zinc-400" />
+              <span>macOS Sonoma or later</span>
+            </span>
             <span>•</span>
-            <span>&lt;40 MB RAM</span>
+            <span>Apple Silicon & Intel</span>
             <span>•</span>
-            <span>100% Offline</span>
-            <span>•</span>
-            <span>Metal 3 GPU</span>
+            <span>2.4 MB</span>
           </div>
         </div>
 
-        {/* Right Column: Full-Sized, Animated Interactive Terminal Grid */}
-        <div className="lg:col-span-7 animate-enter-2">
-          <div className="rounded-2xl border border-white/15 bg-[#06070a] shadow-2xl overflow-hidden hover:border-white/25 transition-all duration-300">
-            {/* Title Bar with Traffic Lights & Layout Switcher */}
-            <div className="flex items-center justify-between px-4 py-3 bg-[#0d0f17] border-b border-white/10 flex-wrap gap-2">
+        {/* Right Column: Native macOS Window Simulation */}
+        <div className="lg:col-span-7">
+          <div className="rounded-2xl border border-white/15 bg-[#090b10] shadow-[0_24px_70px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300">
+            {/* Authentic macOS Window Header with Native Segmented Switcher */}
+            <div className="flex items-center justify-between px-4 py-3 bg-[#13151c]/90 backdrop-blur-md border-b border-white/10 flex-wrap gap-2">
               <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 hover:opacity-80 cursor-pointer transition-opacity" />
-                <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 hover:opacity-80 cursor-pointer transition-opacity" />
-                <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 hover:opacity-80 cursor-pointer transition-opacity" />
-                <span className="text-xs font-mono font-bold text-zinc-300 ml-2 tracking-wide">
-                  HyperGrid // Workspace
+                <div className="w-3 h-3 rounded-full bg-[#ff5f57] border border-[#e0443e]/40 hover:opacity-80 transition-opacity cursor-pointer" />
+                <div className="w-3 h-3 rounded-full bg-[#febc2e] border border-[#dea123]/40 hover:opacity-80 transition-opacity cursor-pointer" />
+                <div className="w-3 h-3 rounded-full bg-[#28c840] border border-[#1aab29]/40 hover:opacity-80 transition-opacity cursor-pointer" />
+                <span className="text-xs font-medium text-zinc-400 ml-2">
+                  HyperGrid Workspace
                 </span>
               </div>
 
-              {/* Layout Switcher Buttons */}
-              <div className="flex items-center space-x-1.5">
+              {/* Native Apple-style Segmented Control */}
+              <div className="flex items-center p-0.5 rounded-lg bg-black/40 border border-white/10">
                 {Object.keys(layoutConfigs).map((key) => {
                   const isSelected = layout === key;
                   return (
@@ -289,10 +279,10 @@ export default function HeroSection() {
                         setLayout(key);
                         if (activePane > layoutConfigs[key].count) setActivePane(1);
                       }}
-                      className={`px-3 py-1 rounded text-xs font-mono font-bold transition-all duration-150 transform active:scale-95 cursor-pointer ${
+                      className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
                         isSelected
-                          ? 'bg-[#ccff00] text-black shadow-sm'
-                          : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
+                          ? 'bg-zinc-700/80 text-white shadow-sm'
+                          : 'text-zinc-400 hover:text-white'
                       }`}
                     >
                       {key.replace('x', '×')}
@@ -302,51 +292,50 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Dynamic Grid Panes Viewport with Pulse Laser Rim */}
-            <div className={`grid ${currentConfig.cols} gap-1.5 p-1.5 bg-[#090b12] min-h-[380px] sm:min-h-[440px] transition-all duration-300`}>
+            {/* Dynamic Grid Panes Viewport */}
+            <div className={`grid ${currentConfig.cols} gap-1 p-1 bg-[#090b10] min-h-[380px] sm:min-h-[440px]`}>
               {visiblePanes.map((pane) => {
                 const isActive = activePane === pane.id;
                 return (
                   <div
                     key={pane.id}
                     onClick={() => setActivePane(pane.id)}
-                    className={`rounded-lg p-3.5 sm:p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden group ${
+                    className={`rounded-xl p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden ${
                       isActive
-                        ? 'bg-[#0d101a] active-laser-pane'
-                        : 'bg-[#0a0c14] hover:bg-[#0c0e18] hover:border-white/10 border border-white/5'
+                        ? 'bg-[#11141c] ring-1.5 ring-[#2997ff] shadow-[0_0_24px_rgba(41,151,255,0.15)]'
+                        : 'bg-[#0c0e14] hover:bg-[#0f1118] border border-white/5'
                     }`}
                   >
                     {/* Pane Header */}
-                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-[11px] font-mono">
-                      <div className="flex items-center space-x-1.5">
-                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#ccff00] animate-ping' : 'bg-zinc-600'}`} />
-                        <span className={isActive ? 'text-[#ccff00] font-bold' : 'text-zinc-400 group-hover:text-zinc-200'}>
-                          ⌘{pane.id} // {pane.title}
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-xs font-mono">
+                      <div className="flex items-center space-x-2">
+                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#2997ff]' : 'bg-zinc-600'}`} />
+                        <span className={isActive ? 'text-[#2997ff] font-semibold' : 'text-zinc-400'}>
+                          ⌘{pane.id} — {pane.title}
                         </span>
                       </div>
-                      <span className="text-zinc-600 text-[10px]">zsh</span>
+                      <span className="text-zinc-600 text-[11px]">zsh</span>
                     </div>
 
                     {/* Terminal Text Lines */}
                     <div className="space-y-1 font-mono text-xs sm:text-[13px] leading-relaxed flex-1 overflow-hidden">
-                      <div className="font-bold text-white truncate">{pane.cmd}</div>
+                      <div className="font-semibold text-white truncate">{pane.cmd}</div>
                       {pane.lines.map((line, idx) => {
                         let colorClass = "text-zinc-400";
-                        if (line.type === 'cyan') colorClass = "text-[#00f0ff]";
-                        if (line.type === 'lime') colorClass = "text-[#ccff00]";
+                        if (line.type === 'blue') colorClass = "text-[#2997ff]";
                         if (line.type === 'success') colorClass = "text-emerald-400";
                         if (line.type === 'dim') colorClass = "text-zinc-500";
 
                         return (
-                          <div key={idx} className={`${colorClass} truncate transition-all duration-300`}>
+                          <div key={idx} className={`${colorClass} truncate`}>
                             {line.text}
                           </div>
                         );
                       })}
                       {isActive && (
-                        <div className="flex items-center space-x-1 text-zinc-500 mt-1.5">
-                          <span className="text-[#ccff00] font-bold">$</span>
-                          <span className="w-2 h-3.5 bg-[#ccff00] terminal-cursor inline-block" />
+                        <div className="flex items-center space-x-1 text-zinc-500 mt-2">
+                          <span className="text-[#2997ff] font-bold">$</span>
+                          <span className="w-2 h-3.5 bg-[#2997ff] terminal-cursor inline-block" />
                         </div>
                       )}
                     </div>
@@ -355,12 +344,12 @@ export default function HeroSection() {
               })}
             </div>
 
-            {/* Bottom Keycap Navigation Bar with Physics Feedback */}
-            <div className="p-3 bg-[#0a0c12] border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400 overflow-x-auto no-scrollbar gap-2">
-              <span className="shrink-0 text-zinc-400 font-semibold">Jump to pane:</span>
+            {/* Bottom macOS Status Bar with Keycaps */}
+            <div className="px-4 py-2.5 bg-[#101218] border-t border-white/10 flex items-center justify-between text-xs text-zinc-400 overflow-x-auto no-scrollbar gap-2">
+              <span className="shrink-0 text-zinc-500">Quick jump:</span>
               <div className="flex items-center space-x-1.5 shrink-0">
-                <span className="keycap px-2.5 py-1 rounded text-xs text-zinc-300 font-bold">⌘</span>
-                <span className="text-zinc-600 font-bold">+</span>
+                <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-mono text-xs font-medium border border-white/10">⌘</span>
+                <span className="text-zinc-600">+</span>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => {
                   const isTargetActive = activePane === num;
                   return (
@@ -374,8 +363,10 @@ export default function HeroSection() {
                         }
                         setActivePane(num);
                       }}
-                      className={`keycap px-3 py-1 rounded text-xs font-bold cursor-pointer ${
-                        isTargetActive ? 'active text-[#ccff00]' : 'text-zinc-300'
+                      className={`px-2 py-0.5 rounded font-mono text-xs font-medium transition-colors cursor-pointer ${
+                        isTargetActive 
+                          ? 'bg-[#0071e3] text-white' 
+                          : 'bg-zinc-800 text-zinc-400 hover:text-white border border-white/5'
                       }`}
                     >
                       {num}
