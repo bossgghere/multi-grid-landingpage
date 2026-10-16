@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutGrid, Layers, Keyboard, Cpu, Zap, Sliders } from 'lucide-react';
+import { LayoutGrid, Layers, Keyboard, Cpu } from 'lucide-react';
 
 export default function UnifiedSection() {
   const features = [
@@ -35,41 +35,41 @@ export default function UnifiedSection() {
   ];
 
   const benchmarks = [
-    { metric: "Binary Size", hyper: "2.4 MB", other: "450 MB+" },
-    { metric: "RAM (6 Panes)", hyper: "<40 MB", other: "1.2 GB+" },
-    { metric: "Startup Speed", hyper: "12 ms", other: "2.5s+" },
+    { metric: "Binary Download Size", hyper: "2.4 MB", other: "450 MB+" },
+    { metric: "Memory (6 Panes)", hyper: "<40 MB", other: "1.2 GB+" },
+    { metric: "Cold Launch Speed", hyper: "12 ms", other: "2.5s+" },
     { metric: "Keystroke Latency", hyper: "0.4 ms", other: "40 ms+" },
   ];
 
   return (
-    <section id="features" className="py-8 sm:py-10 px-4 sm:px-6 max-w-7xl mx-auto border-t border-white/5">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+    <section id="features" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
         {/* Left: 4 Core Features (7 columns) */}
         <div className="lg:col-span-7">
-          <div className="text-left mb-4">
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight uppercase">
+          <div className="text-left mb-6">
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
               Engineered for Speed
             </h2>
-            <p className="text-xs text-zinc-400 mt-0.5">
-              Zero Electron bloat. 100% native AppKit architecture.
+            <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+              Zero Electron bloat. 100% native AppKit & Swift 6 architecture.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
             {features.map((item, idx) => {
               const Icon = item.icon;
               return (
                 <div
                   key={idx}
-                  className="p-3.5 rounded-lg bg-[#090a10] border border-white/5 text-left"
+                  className="p-4 sm:p-5 rounded-xl bg-[#090a10] border border-white/5 text-left hover:border-white/10 transition-colors"
                 >
-                  <div className="w-7 h-7 rounded bg-zinc-900 border border-white/10 flex items-center justify-center text-[#ccff00] mb-2.5">
-                    <Icon className="w-3.5 h-3.5" />
+                  <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-[#ccff00] mb-3">
+                    <Icon className="w-4 h-4" />
                   </div>
-                  <h3 className="text-xs font-bold text-white mb-1">
+                  <h3 className="text-sm sm:text-base font-bold text-white mb-1.5">
                     {item.title}
                   </h3>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">
+                  <p className="text-xs sm:text-[13px] text-zinc-400 leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -79,21 +79,21 @@ export default function UnifiedSection() {
         </div>
 
         {/* Right: Shortcuts & Benchmarks Combined (5 columns) */}
-        <div className="lg:col-span-5 space-y-4">
+        <div className="lg:col-span-5 space-y-4 sm:space-y-5">
           {/* Shortcuts Card */}
-          <div className="p-4 rounded-lg bg-[#090a10] border border-white/5 text-left">
-            <h3 className="text-xs font-mono font-bold text-zinc-300 uppercase mb-3 flex items-center justify-between">
+          <div className="p-5 rounded-xl bg-[#090a10] border border-white/5 text-left">
+            <h3 className="text-xs sm:text-sm font-mono font-bold text-zinc-200 uppercase mb-3 flex items-center justify-between">
               <span>Shortcuts</span>
-              <span className="text-zinc-500 font-normal text-[10px]">Home-Row</span>
+              <span className="text-zinc-500 font-normal text-xs">Home-Row</span>
             </h3>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2.5">
               {shortcuts.map((sc, idx) => (
-                <div key={idx} className="flex items-center justify-between text-[11px] font-mono py-0.5">
+                <div key={idx} className="flex items-center justify-between text-xs font-mono py-1">
                   <span className="text-zinc-400">{sc.action}</span>
-                  <div className="flex items-center space-x-0.5">
+                  <div className="flex items-center space-x-1">
                     {sc.keys.map((k, kIdx) => (
-                      <kbd key={kIdx} className="px-1.5 py-0.2 rounded bg-zinc-900 border border-white/10 text-[10px] text-zinc-300 font-semibold">
+                      <kbd key={kIdx} className="px-1.5 sm:px-2 py-0.5 rounded bg-zinc-900 border border-white/10 text-[11px] sm:text-xs text-zinc-300 font-semibold">
                         {k}
                       </kbd>
                     ))}
@@ -104,19 +104,19 @@ export default function UnifiedSection() {
           </div>
 
           {/* Benchmarks Card */}
-          <div className="p-4 rounded-lg bg-[#090a10] border border-white/5 text-left">
-            <h3 className="text-xs font-mono font-bold text-zinc-300 uppercase mb-2.5 flex items-center justify-between">
+          <div className="p-5 rounded-xl bg-[#090a10] border border-white/5 text-left">
+            <h3 className="text-xs sm:text-sm font-mono font-bold text-zinc-200 uppercase mb-3 flex items-center justify-between">
               <span>Benchmarks</span>
-              <span className="text-[#ccff00] text-[10px]">vs. Electron</span>
+              <span className="text-[#ccff00] text-xs">vs. Electron</span>
             </h3>
 
-            <div className="divide-y divide-white/5 text-[11px] font-mono">
+            <div className="divide-y divide-white/5 text-xs font-mono">
               {benchmarks.map((b, idx) => (
-                <div key={idx} className="flex items-center justify-between py-1.5">
+                <div key={idx} className="flex items-center justify-between py-2">
                   <span className="text-zinc-400">{b.metric}</span>
                   <div className="flex items-center space-x-3 text-right">
-                    <span className="text-[#ccff00] font-bold">{b.hyper}</span>
-                    <span className="text-zinc-600 line-through text-[10px]">{b.other}</span>
+                    <span className="text-[#ccff00] font-bold text-xs sm:text-sm">{b.hyper}</span>
+                    <span className="text-zinc-600 line-through text-[11px] sm:text-xs">{b.other}</span>
                   </div>
                 </div>
               ))}

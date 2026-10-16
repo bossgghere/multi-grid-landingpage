@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, Check, AlertCircle, ArrowRight } from 'lucide-react';
+import { Download, Check, AlertCircle } from 'lucide-react';
 
 export default function HeroSection({ emailInputRef }) {
   const [email, setEmail] = useState('');
@@ -8,7 +8,7 @@ export default function HeroSection({ emailInputRef }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isUnlocked, setIsUnlocked] = useState(false);
 
-  // Terminal interactive state (right column)
+  // Terminal interactive state
   const [layout, setLayout] = useState('2x2');
   const [activePane, setActivePane] = useState(1);
 
@@ -21,15 +21,91 @@ export default function HeroSection({ emailInputRef }) {
   };
 
   const terminals = [
-    { id: 1, title: "agent", cmd: "$ claude code", out: "Listening in grid cell 1..." },
-    { id: 2, title: "dev", cmd: "$ npm run dev", out: "Local: http://localhost:5173" },
-    { id: 3, title: "sys", cmd: "$ btop", out: "CPU: 4.8% | RAM: 36MB" },
-    { id: 4, title: "api", cmd: "$ cargo run", out: "Listening on 127.0.0.1:8080" },
-    { id: 5, title: "models", cmd: "$ gemini run", out: "Task completed: 0 errors" },
-    { id: 6, title: "git", cmd: "$ git status -s", out: "## main...origin/main [clean]" },
-    { id: 7, title: "docker", cmd: "$ docker ps", out: "redis-db & pg-db running" },
-    { id: 8, title: "logs", cmd: "$ tail -f app.log", out: "[INFO] Grid session live" },
-    { id: 9, title: "zsh", cmd: "$ uname -m", out: "arm64 Apple Silicon" },
+    {
+      id: 1,
+      title: "agent",
+      cmd: "$ claude code",
+      lines: [
+        { text: "Claude 3.7 initialized in cell #1", type: "cyan" },
+        { text: "Listening for local instructions...", type: "dim" },
+        { text: "Ready.", type: "lime" }
+      ]
+    },
+    {
+      id: 2,
+      title: "frontend",
+      cmd: "$ npm run dev",
+      lines: [
+        { text: "VITE v6.2.0 ready in 98 ms", type: "success" },
+        { text: "➜ Local: http://localhost:5173", type: "cyan" },
+        { text: "HMR active with zero lag", type: "dim" }
+      ]
+    },
+    {
+      id: 3,
+      title: "telemetry",
+      cmd: "$ btop",
+      lines: [
+        { text: "CPU 5.2% | GPU Metal 3.0", type: "cyan" },
+        { text: "Resident RAM: 36.4 MB", type: "lime" },
+        { text: "Sessions: 9 independent PTYs", type: "dim" }
+      ]
+    },
+    {
+      id: 4,
+      title: "api-server",
+      cmd: "$ cargo run",
+      lines: [
+        { text: "Compiling hyper-daemon v1.0", type: "dim" },
+        { text: "Listening on 127.0.0.1:8080", type: "success" },
+        { text: "[OK] IPC socket connected", type: "lime" }
+      ]
+    },
+    {
+      id: 5,
+      title: "models",
+      cmd: "$ gemini run",
+      lines: [
+        { text: "Gemini 2.5 Flash agent running", type: "cyan" },
+        { text: "Verification: 10/10 tests pass", type: "lime" }
+      ]
+    },
+    {
+      id: 6,
+      title: "git",
+      cmd: "$ git status -sb",
+      lines: [
+        { text: "## main...origin/main [clean]", type: "success" },
+        { text: "Fast-forward synchronized", type: "dim" }
+      ]
+    },
+    {
+      id: 7,
+      title: "docker",
+      cmd: "$ docker ps",
+      lines: [
+        { text: "redis-db: Up 5 hours (healthy)", type: "dim" },
+        { text: "postgres: Up 5 hours (:5432)", type: "success" }
+      ]
+    },
+    {
+      id: 8,
+      title: "logs",
+      cmd: "$ tail -f app.log",
+      lines: [
+        { text: "[INFO] Grid layout resized to 3x3", type: "cyan" },
+        { text: "[INFO] Session preservation: active", type: "lime" }
+      ]
+    },
+    {
+      id: 9,
+      title: "zsh",
+      cmd: "$ uname -mprs",
+      lines: [
+        { text: "Darwin arm64 Apple Silicon", type: "cyan" },
+        { text: "Native Swift 6 & AppKit core", type: "lime" }
+      ]
+    },
   ];
 
   const currentConfig = layoutConfigs[layout] || layoutConfigs['2x2'];
@@ -40,7 +116,7 @@ export default function HeroSection({ emailInputRef }) {
     setError('');
 
     if (!email || !email.includes('@') || !email.includes('.')) {
-      setError('Please enter a valid email.');
+      setError('Please enter a valid email address.');
       return;
     }
 
@@ -65,53 +141,53 @@ export default function HeroSection({ emailInputRef }) {
   };
 
   return (
-    <section className="pt-20 sm:pt-24 pb-10 px-4 sm:px-6 max-w-7xl mx-auto">
+    <section className="pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Background Engineering Grid */}
       <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none -z-10" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-        {/* Left Column: Headline & Direct Download */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* Left Column: Bold Headline & Direct Download */}
         <div className="lg:col-span-5 text-left">
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight uppercase text-white leading-[1.08] mb-3">
+          <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black tracking-tight uppercase text-white leading-[1.05] mb-4">
             Run 9 Terminals <br />
             in One Window. <br />
             <span className="text-[#ccff00]">Zero Lag. Pure Swift.</span>
           </h1>
 
-          <p className="text-xs sm:text-sm text-zinc-400 mb-6 leading-relaxed">
-            A fast, native macOS terminal workspace. Choose any grid layout from 1×1 to 3×3, navigate instantly with <kbd className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-200 font-mono text-[11px] border border-zinc-700">⌘1–⌘9</kbd>, and run independent shells without closing sessions.
+          <p className="text-sm sm:text-base text-zinc-300 mb-8 leading-relaxed max-w-lg font-normal">
+            A fast, lightweight macOS terminal workspace. Choose any grid layout from 1×1 to 3×3, navigate instantly with <kbd className="px-1.5 py-0.5 rounded bg-zinc-800 text-[#ccff00] font-mono text-xs border border-zinc-700 font-bold">⌘1–⌘9</kbd>, and run independent shells without closing sessions.
           </p>
 
           {/* Integrated Download Box */}
-          <div className="p-4 sm:p-5 rounded-xl bg-[#090a10] border border-white/10 shadow-xl">
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#090a10] border border-white/10 shadow-2xl">
             {!isUnlocked ? (
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <div className="flex items-center justify-between text-[11px] font-mono">
-                  <span className="text-zinc-400 font-semibold uppercase">Get Early Access</span>
-                  <span className="text-[#ccff00]">Code: HYPER2026</span>
+              <form onSubmit={handleSubmit} className="space-y-3.5">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="text-zinc-300 font-bold uppercase tracking-wider">Get Early Access</span>
+                  <span className="text-[#ccff00] font-bold">Code: HYPER2026</span>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-2">
+                <div className="flex flex-col sm:flex-row gap-2.5">
                   <input
                     ref={emailInputRef}
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="flex-1 px-3 py-2.5 rounded-lg bg-[#0e1017] border border-white/10 focus:border-[#ccff00] text-white placeholder-zinc-600 font-mono text-xs outline-none transition-colors"
+                    placeholder="Enter developer email"
+                    className="flex-1 px-4 py-3 rounded-lg bg-[#0e1017] border border-white/10 focus:border-[#ccff00] text-white placeholder-zinc-500 font-mono text-xs sm:text-sm outline-none transition-colors"
                   />
                   <input
                     type="text"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
                     placeholder="Code"
-                    className="w-full sm:w-28 px-3 py-2.5 rounded-lg bg-[#0e1017] border border-white/10 focus:border-[#ccff00] text-white placeholder-zinc-600 font-mono text-xs outline-none transition-colors uppercase text-center"
+                    className="w-full sm:w-32 px-4 py-3 rounded-lg bg-[#0e1017] border border-white/10 focus:border-[#ccff00] text-white placeholder-zinc-500 font-mono text-xs sm:text-sm outline-none transition-colors uppercase text-center font-bold"
                   />
                 </div>
 
                 {error && (
-                  <div className="text-red-400 text-[11px] font-mono flex items-center space-x-1.5">
-                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  <div className="text-red-400 text-xs font-mono flex items-center space-x-1.5">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
                     <span>{error}</span>
                   </div>
                 )}
@@ -119,49 +195,53 @@ export default function HeroSection({ emailInputRef }) {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-2.5 rounded-lg bg-[#ccff00] hover:bg-[#d9ff33] text-black font-mono font-bold text-xs tracking-wider uppercase flex items-center justify-center space-x-2 transition-transform active:translate-y-0.5 cursor-pointer disabled:opacity-50"
+                  className="w-full py-3.5 rounded-lg bg-[#ccff00] hover:bg-[#d9ff33] text-black font-mono font-black text-xs sm:text-sm tracking-wider uppercase flex items-center justify-center space-x-2 transition-transform active:translate-y-0.5 shadow-md cursor-pointer disabled:opacity-50"
                 >
-                  <Download className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <Download className="w-4 h-4 stroke-[2.5]" />
                   <span>{isLoading ? 'Unlocking...' : 'Download for macOS (.dmg)'}</span>
                 </button>
               </form>
             ) : (
-              <div className="text-center py-2">
-                <div className="text-[#ccff00] text-xs font-mono font-bold flex items-center justify-center space-x-1.5 mb-1">
-                  <Check className="w-4 h-4 stroke-[2.5]" />
+              <div className="text-center py-3">
+                <div className="text-[#ccff00] text-sm font-mono font-bold flex items-center justify-center space-x-2 mb-1.5">
+                  <Check className="w-5 h-5 stroke-[2.5]" />
                   <span>Download Started</span>
                 </div>
-                <p className="text-[11px] font-mono text-zinc-400">
-                  Universal DMG (Apple Silicon & Intel).
+                <p className="text-xs font-mono text-zinc-400">
+                  Universal DMG (Apple Silicon M1/M2/M3/M4 & Intel).
                 </p>
               </div>
             )}
           </div>
 
           {/* Minimal Specs */}
-          <div className="mt-4 flex items-center flex-wrap gap-4 text-[11px] font-mono text-zinc-500">
-            <span>2.4 MB Binary</span>
+          <div className="mt-5 flex items-center flex-wrap gap-5 text-xs font-mono text-zinc-500">
+            <span className="text-zinc-300 font-semibold">2.4 MB Binary</span>
             <span>•</span>
             <span>&lt;40 MB RAM</span>
             <span>•</span>
             <span>100% Offline</span>
+            <span>•</span>
+            <span>Metal 3 GPU</span>
           </div>
         </div>
 
-        {/* Right Column: Live Interactive Grid in the Hero */}
+        {/* Right Column: Full-Sized, Impressive Interactive Terminal Grid */}
         <div className="lg:col-span-7">
-          <div className="rounded-xl border border-white/10 bg-[#07080b] shadow-2xl overflow-hidden">
-            {/* Window Title bar with Layout Controls */}
-            <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#0d0e14] border-b border-white/5 flex-wrap gap-2">
-              <div className="flex items-center space-x-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
-                <span className="text-[11px] font-mono text-zinc-400 ml-1.5">HyperGrid</span>
+          <div className="rounded-2xl border border-white/15 bg-[#06070a] shadow-2xl overflow-hidden">
+            {/* Title Bar with Traffic Lights & Layout Switcher */}
+            <div className="flex items-center justify-between px-4 py-3 bg-[#0d0f17] border-b border-white/10 flex-wrap gap-2">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40" />
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40" />
+                <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40" />
+                <span className="text-xs font-mono font-bold text-zinc-300 ml-2 tracking-wide">
+                  HyperGrid // Workspace
+                </span>
               </div>
 
               {/* Layout Switcher Buttons */}
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center space-x-1.5">
                 {Object.keys(layoutConfigs).map((key) => {
                   const isSelected = layout === key;
                   return (
@@ -171,10 +251,10 @@ export default function HeroSection({ emailInputRef }) {
                         setLayout(key);
                         if (activePane > layoutConfigs[key].count) setActivePane(1);
                       }}
-                      className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold transition-colors ${
+                      className={`px-3 py-1 rounded text-xs font-mono font-bold transition-all ${
                         isSelected
-                          ? 'bg-[#ccff00] text-black'
-                          : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+                          ? 'bg-[#ccff00] text-black shadow-sm'
+                          : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
                       }`}
                     >
                       {key.replace('x', '×')}
@@ -184,34 +264,51 @@ export default function HeroSection({ emailInputRef }) {
               </div>
             </div>
 
-            {/* Dynamic Grid Panes Viewport */}
-            <div className={`grid ${currentConfig.cols} gap-1 p-1 bg-[#090a10] min-h-[290px] sm:min-h-[340px]`}>
+            {/* Dynamic Grid Panes Viewport with Solid Height */}
+            <div className={`grid ${currentConfig.cols} gap-1.5 p-1.5 bg-[#090b12] min-h-[380px] sm:min-h-[440px]`}>
               {visiblePanes.map((pane) => {
                 const isActive = activePane === pane.id;
                 return (
                   <div
                     key={pane.id}
                     onClick={() => setActivePane(pane.id)}
-                    className={`rounded p-2.5 transition-all cursor-pointer flex flex-col justify-between ${
+                    className={`rounded-lg p-3.5 sm:p-4 transition-all cursor-pointer flex flex-col justify-between overflow-hidden ${
                       isActive
-                        ? 'bg-[#0e1017] ring-1 ring-[#ccff00]'
-                        : 'bg-[#0a0b10] hover:bg-[#0c0d14] border border-white/5'
+                        ? 'bg-[#0d101a] ring-2 ring-[#ccff00] shadow-[inset_0_0_20px_rgba(204,255,0,0.06)]'
+                        : 'bg-[#0a0c14] hover:bg-[#0c0e18] border border-white/5'
                     }`}
                   >
-                    <div className="flex items-center justify-between pb-1 mb-1 border-b border-white/5 text-[9px] font-mono">
-                      <span className={isActive ? 'text-[#ccff00] font-bold' : 'text-zinc-400'}>
-                        ⌘{pane.id} // {pane.title}
-                      </span>
+                    {/* Pane Header */}
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-[11px] font-mono">
+                      <div className="flex items-center space-x-1.5">
+                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#ccff00] animate-pulse' : 'bg-zinc-600'}`} />
+                        <span className={isActive ? 'text-[#ccff00] font-bold' : 'text-zinc-400'}>
+                          ⌘{pane.id} // {pane.title}
+                        </span>
+                      </div>
                       <span className="text-zinc-600">zsh</span>
                     </div>
 
-                    <div className="space-y-0.5 font-mono text-[10px] text-zinc-300 flex-1 overflow-hidden">
+                    {/* Terminal Text Lines */}
+                    <div className="space-y-1 font-mono text-xs sm:text-[13px] leading-relaxed flex-1 overflow-hidden">
                       <div className="font-bold text-white truncate">{pane.cmd}</div>
-                      <div className="text-zinc-400 truncate">{pane.out}</div>
+                      {pane.lines.map((line, idx) => {
+                        let colorClass = "text-zinc-400";
+                        if (line.type === 'cyan') colorClass = "text-[#00f0ff]";
+                        if (line.type === 'lime') colorClass = "text-[#ccff00]";
+                        if (line.type === 'success') colorClass = "text-emerald-400";
+                        if (line.type === 'dim') colorClass = "text-zinc-500";
+
+                        return (
+                          <div key={idx} className={`${colorClass} truncate`}>
+                            {line.text}
+                          </div>
+                        );
+                      })}
                       {isActive && (
-                        <div className="flex items-center space-x-1 text-zinc-500 mt-1">
-                          <span className="text-[#ccff00]">$</span>
-                          <span className="w-1.5 h-3 bg-[#ccff00] animate-pulse inline-block" />
+                        <div className="flex items-center space-x-1 text-zinc-500 mt-1.5">
+                          <span className="text-[#ccff00] font-bold">$</span>
+                          <span className="w-2 h-3.5 bg-[#ccff00] animate-pulse inline-block" />
                         </div>
                       )}
                     </div>
@@ -220,12 +317,12 @@ export default function HeroSection({ emailInputRef }) {
               })}
             </div>
 
-            {/* Compact Keycap Navigation Deck */}
-            <div className="p-2 bg-[#0a0c12] border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-500 overflow-x-auto no-scrollbar gap-1.5">
-              <span className="shrink-0 text-zinc-400">Jump:</span>
-              <div className="flex items-center space-x-1 shrink-0">
-                <span className="keycap px-1.5 py-0.5 rounded text-[10px] text-zinc-300 font-bold">⌘</span>
-                <span className="text-zinc-600">+</span>
+            {/* Bottom Keycap Navigation Bar */}
+            <div className="p-3 bg-[#0a0c12] border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400 overflow-x-auto no-scrollbar gap-2">
+              <span className="shrink-0 text-zinc-400 font-semibold">Jump to pane:</span>
+              <div className="flex items-center space-x-1.5 shrink-0">
+                <span className="keycap px-2.5 py-1 rounded text-xs text-zinc-300 font-bold">⌘</span>
+                <span className="text-zinc-600 font-bold">+</span>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => {
                   const isTargetActive = activePane === num;
                   return (
@@ -239,8 +336,8 @@ export default function HeroSection({ emailInputRef }) {
                         }
                         setActivePane(num);
                       }}
-                      className={`keycap px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer ${
-                        isTargetActive ? 'active text-[#ccff00]' : 'text-zinc-400'
+                      className={`keycap px-3 py-1 rounded text-xs font-bold cursor-pointer ${
+                        isTargetActive ? 'active text-[#ccff00]' : 'text-zinc-300'
                       }`}
                     >
                       {num}
