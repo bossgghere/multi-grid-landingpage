@@ -40,8 +40,8 @@ const metrics = [
 
 export default function BenchmarksSection() {
   return (
-    <section id="performance" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-      <div className="text-center mb-12">
+    <section id="performance" className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+      <div className="text-center mb-8">
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#1d1d1f]">
           Engineering Performance
         </h2>

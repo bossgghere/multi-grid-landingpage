@@ -12,8 +12,8 @@ const shortcuts = [
 
 export default function ShortcutsSection() {
   return (
-    <section id="shortcuts" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-      <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12">
+    <section id="shortcuts" className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+      <div className="text-center max-w-xl mx-auto mb-8">
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1d1d1f] mb-2">
           Keep your hands on the home row.
         </h2>

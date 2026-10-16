@@ -134,7 +134,7 @@ export default function TerminalPreview() {
   const visiblePanes = terminals.slice(0, currentConfig.count);
 
   return (
-    <section id="demo" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="demo" className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       {/* Floating macOS Window Mockup with Authentic Light Chrome */}
       <div className="rounded-2xl border border-black/10 bg-[#090b10] shadow-[0_24px_70px_rgba(0,0,0,0.12),0_8px_24px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-300">
         {/* Light macOS Tahoe / Sequoia Window Header */}

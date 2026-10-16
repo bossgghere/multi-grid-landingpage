@@ -26,8 +26,8 @@ const features = [
 
 export default function FeaturesSection() {
   return (
-    <section id="features" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-      <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+    <section id="features" className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      <div className="text-center max-w-2xl mx-auto mb-8">
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1d1d1f] mb-3">
           Designed for speed. <br className="hidden sm:inline" />
           Built for Mac.

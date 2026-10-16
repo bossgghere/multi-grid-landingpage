@@ -44,9 +44,9 @@ export default function HeroSection({ emailInputRef }) {
   };
 
   return (
-    <section className="pt-28 sm:pt-36 pb-12 sm:pb-16 px-4 sm:px-6 text-center max-w-4xl mx-auto">
+    <section className="pt-20 sm:pt-28 pb-6 sm:pb-8 px-4 sm:px-6 text-center max-w-4xl mx-auto">
       {/* Category Tag */}
-      <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-black/[0.04] border border-black/[0.06] mb-6">
+      <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-black/[0.04] border border-black/[0.06] mb-4">
         <span className="w-1.5 h-1.5 rounded-full bg-[#0071e3]" />
         <span className="text-xs font-medium text-[#1d1d1f]">
           Native Multi-Grid Terminal Workspace
@@ -54,13 +54,13 @@ export default function HeroSection({ emailInputRef }) {
       </div>
 
       {/* Main Apple Headline */}
-      <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#1d1d1f] leading-[1.06] mb-5">
+      <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#1d1d1f] leading-[1.06] mb-3">
         Nine terminals. <br className="hidden sm:inline" />
         Zero clutter.
       </h1>
 
       {/* Subtitle */}
-      <p className="text-base sm:text-xl text-[#86868b] max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+      <p className="text-base sm:text-xl text-[#86868b] max-w-2xl mx-auto mb-6 leading-relaxed font-normal">
         A fast, minimalist macOS terminal workspace. Choose any grid layout from 1×1 to 3×3, navigate instantly with <kbd className="px-1.5 py-0.5 rounded bg-white text-[#1d1d1f] font-mono text-xs border border-black/10 shadow-sm font-semibold">⌘1–⌘9</kbd>, and run independent shells without closing sessions.
       </p>
 
